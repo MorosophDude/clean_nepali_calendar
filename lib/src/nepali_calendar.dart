@@ -35,6 +35,7 @@ class CleanNepaliCalendar extends StatefulWidget {
     this.dateCellBuilder,
     this.enableVibration = true,
     this.headerBuilder,
+    this.disableSwipe = false,
   }) : super(key: key);
 
   final NepaliDateTime? initialDate;
@@ -53,6 +54,7 @@ class CleanNepaliCalendar extends StatefulWidget {
   final DateCellBuilder? dateCellBuilder;
   final HeaderBuilder? headerBuilder;
   final bool enableVibration;
+  final bool disableSwipe;
 
   @override
   CleanNepaliCalendarState createState() => CleanNepaliCalendarState();
@@ -132,6 +134,7 @@ class CleanNepaliCalendarState extends State<CleanNepaliCalendar> {
       dateCellBuilder: widget.dateCellBuilder,
       headerBuilder: widget.headerBuilder,
       dragStartBehavior: DragStartBehavior.start,
+      disableSwipe: widget.disableSwipe,
     );
   }
 

@@ -20,6 +20,7 @@ class _MonthView extends StatefulWidget {
     this.headerDayBuilder,
     this.dateCellBuilder,
     this.headerBuilder,
+    required this.disableSwipe,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDate.isAfter(firstDate)),
         super(key: key);
@@ -50,6 +51,8 @@ class _MonthView extends StatefulWidget {
   final HeaderDayBuilder? headerDayBuilder;
   final DateCellBuilder? dateCellBuilder;
   final HeaderBuilder? headerBuilder;
+
+  final bool disableSwipe;
 
   @override
   _MonthViewState createState() => _MonthViewState();
@@ -252,6 +255,9 @@ class _MonthViewState extends State<_MonthView>
                         dragStartBehavior: widget.dragStartBehavior,
                         key: ValueKey<NepaliDateTime>(widget.selectedDate),
                         controller: _dayPickerController,
+                        physics: widget.disableSwipe
+                            ? const NeverScrollableScrollPhysics()
+                            : null,
                         scrollDirection: Axis.horizontal,
                         itemCount:
                             _monthDelta(widget.firstDate, widget.lastDate) + 1,
