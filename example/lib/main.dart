@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget cellBuilder(isToday, isSelected, isDisabled, nepaliDate, label, text,
-      calendarStyle, isWeekend) {
+      calendarStyle, isWeekend, eventLoader) {
     // print(isSelected);
     Decoration _buildCellDecoration() {
       if (isSelected && isToday) {

@@ -21,6 +21,9 @@ class _MonthView extends StatefulWidget {
     this.dateCellBuilder,
     this.headerBuilder,
     required this.disableSwipe,
+    this.eventColorLoader,
+    this.markerBuilder,
+    required this.maxMarkerCount,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDate.isAfter(firstDate)),
         super(key: key);
@@ -51,6 +54,9 @@ class _MonthView extends StatefulWidget {
   final HeaderDayBuilder? headerDayBuilder;
   final DateCellBuilder? dateCellBuilder;
   final HeaderBuilder? headerBuilder;
+  final EventColorLoader? eventColorLoader;
+  final MarkerBuilder? markerBuilder;
+  final int maxMarkerCount;
 
   final bool disableSwipe;
 
@@ -166,6 +172,9 @@ class _MonthViewState extends State<_MonthView>
       headerDayType: widget.headerDayType,
       headerDayBuilder: widget.headerDayBuilder,
       dateCellBuilder: widget.dateCellBuilder,
+      eventColorLoader: widget.eventColorLoader,
+      markerBuilder: widget.markerBuilder,
+      maxMarkerCount: widget.maxMarkerCount,
     );
   }
 

@@ -46,6 +46,9 @@ class _DaysView extends StatelessWidget {
     this.headerDayType = HeaderDayType.initial,
     this.headerDayBuilder,
     this.dateCellBuilder,
+    this.eventColorLoader,
+    this.markerBuilder,
+    required this.maxMarkerCount,
   })  : assert(!firstDate.isAfter(lastDate)),
         assert(selectedDate.isAfter(firstDate)),
         super(key: key);
@@ -72,6 +75,9 @@ class _DaysView extends StatelessWidget {
   final HeaderDayType headerDayType;
   final HeaderDayBuilder? headerDayBuilder;
   final DateCellBuilder? dateCellBuilder;
+  final EventColorLoader? eventColorLoader;
+  final MarkerBuilder? markerBuilder;
+  final int maxMarkerCount;
 
   List<Widget> _getDayHeaders(Language language, TextStyle? headerStyle,
       HeaderDayType headerDayType, HeaderDayBuilder? builder) {
@@ -133,8 +139,12 @@ class _DaysView extends StatelessWidget {
     final labels = <Widget>[];
     if (calendarStyle.renderDaysOfWeek) {
       labels.addAll(
-        _getDayHeaders(language, themeData.textTheme.caption, headerDayType,
-            headerDayBuilder),
+        _getDayHeaders(
+          language,
+          themeData.textTheme.bodySmall,
+          headerDayType,
+          headerDayBuilder,
+        ),
       );
     }
 
@@ -179,6 +189,40 @@ class _DaysView extends StatelessWidget {
             onChanged(dayToBuild);
           },
           builder: dateCellBuilder,
+          eventColorLoader: eventColorLoader,
+          markerBuilder: markerBuilder ??
+              (context, day, eventColors) => Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ...eventColors
+                          .take(maxMarkerCount)
+                          .map(
+                            (eventColor) => Container(
+                              width: 5,
+                              height: 5,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 0.5),
+                              decoration: BoxDecoration(
+                                color: eventColor,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      if (eventColors.length > maxMarkerCount)
+                        Text(
+                          String.fromCharCode(Icons.add_rounded.codePoint),
+                          style: TextStyle(
+                            inherit: false,
+                            color: IconTheme.of(context).color,
+                            fontSize: 5,
+                            fontWeight: FontWeight.w900,
+                            fontFamily: Icons.add_rounded.fontFamily,
+                            package: Icons.add_rounded.fontPackage,
+                          ),
+                        )
+                    ],
+                  ),
         );
 
         if (!disabled) {
